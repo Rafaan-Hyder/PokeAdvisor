@@ -28,6 +28,19 @@ python main.py
 pytest
 ```
 
+## PokéAPI cache
+
+`pokeadvisor/pokeapi_client.py` fetches a Pokémon's types, base stats, and
+move list from [PokéAPI](https://pokeapi.co) and caches the result under
+`data/cache/<name>.json`. A handful of sample fixtures (pikachu, charizard,
+gengar, bulbasaur) are committed so the client, its tests, and the demo
+script work offline. Run the demo with:
+
+```bash
+python scripts/fetch_sample_pokemon.py
+```
+
 ## Status
 
-Stage 0 — project scaffolding only. No functionality implemented yet.
+Stage 1 — PokéAPI client implemented and cached. Damage calc, moveset
+prediction, counter recommendation, and GUI are not yet implemented.

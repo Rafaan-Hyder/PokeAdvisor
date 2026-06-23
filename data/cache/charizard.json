@@ -1,0 +1,26 @@
+{
+  "name": "charizard",
+  "types": ["fire", "flying"],
+  "stats": {
+    "hp": 78,
+    "attack": 84,
+    "defense": 78,
+    "special-attack": 109,
+    "special-defense": 85,
+    "speed": 100
+  },
+  "moves": [
+    "mega-punch",
+    "fire-punch",
+    "thunder-punch",
+    "swords-dance",
+    "flamethrower",
+    "dragon-claw",
+    "fly",
+    "wing-attack",
+    "fire-blast",
+    "air-slash",
+    "earthquake",
+    "solar-beam"
+  ]
+}

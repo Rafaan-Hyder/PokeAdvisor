@@ -1,0 +1,26 @@
+{
+  "name": "pikachu",
+  "types": ["electric"],
+  "stats": {
+    "hp": 35,
+    "attack": 55,
+    "defense": 40,
+    "special-attack": 50,
+    "special-defense": 50,
+    "speed": 90
+  },
+  "moves": [
+    "mega-punch",
+    "pay-day",
+    "thunder-punch",
+    "swords-dance",
+    "thunderbolt",
+    "quick-attack",
+    "double-team",
+    "thunder-wave",
+    "thunder",
+    "agility",
+    "iron-tail",
+    "volt-tackle"
+  ]
+}

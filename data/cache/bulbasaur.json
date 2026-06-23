@@ -1,0 +1,26 @@
+{
+  "name": "bulbasaur",
+  "types": ["grass", "poison"],
+  "stats": {
+    "hp": 45,
+    "attack": 49,
+    "defense": 49,
+    "special-attack": 65,
+    "special-defense": 65,
+    "speed": 45
+  },
+  "moves": [
+    "swords-dance",
+    "cut",
+    "razor-wind",
+    "tackle",
+    "vine-whip",
+    "growl",
+    "leech-seed",
+    "sleep-powder",
+    "sweet-scent",
+    "synthesis",
+    "petal-dance",
+    "growth"
+  ]
+}

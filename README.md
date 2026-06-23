@@ -70,10 +70,27 @@ probability-weighted *expected* damage in return, and the opponent's
 blended into a net-advantage score (a simplified minimax), and the
 highest-scoring action is returned with a plain-language explanation.
 
+## GUI
+
+`pokeadvisor/gui.py` is a Tkinter desktop app (launched via `python
+main.py`): pick your active Pokémon and up to 4 of its moves, pick the
+opponent's active Pokémon, and click Analyze. The output panel shows your
+moves ranked by estimated damage (color-coded by effectiveness tier), the
+opponent's predicted moveset with probabilities, and the recommended
+action with its explanation. Pokémon/move choices are limited to what's in
+the offline fixture cache (see note below). The GUI doesn't take a bench
+input, so `counter_engine`'s switch-recommendation path isn't reachable
+from it yet — only move recommendations are shown.
+
 ## Status
 
-Stage 4 — counter recommendation engine implemented and tested. GUI is not
-yet implemented.
+Stage 5 — GUI implemented and manually exercised end-to-end (headless via
+Xvfb, since this sandbox has no display). Evaluation script and final
+polish are not yet done.
+
+Note: this sandbox's Python venv originally lacked Tkinter (`python3-tk`
+wasn't installed for that interpreter version); the venv was recreated
+against `python3.12`, which has it, and `requirements.txt` reinstalled.
 
 Note: move/Pokémon data and usage stats are currently backed by
 hand-written JSON/text fixtures (`data/cache/`, `data/usage_stats/`)

@@ -1,8 +1,10 @@
 """Entry point for PokéAdvisor."""
 
+from pokeadvisor.gui import run
+
 
 def main():
-    print("PokéAdvisor — skeleton scaffold. GUI not yet implemented.")
+    run()
 
 
 if __name__ == "__main__":

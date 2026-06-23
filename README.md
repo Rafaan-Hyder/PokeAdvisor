@@ -59,10 +59,21 @@ the proposal: once a move is revealed, it's removed from the unseen
 candidate pool and the remaining probability mass is redistributed
 proportionally among the still-unseen moves.
 
+## Counter recommendation
+
+`pokeadvisor/counter_engine.py` combines the damage calculator and moveset
+predictor to recommend the player's best action each turn: attack with a
+move, or switch to a bench Pokémon. For each candidate action it computes
+the damage the player deals (0 for switching), the opponent's
+probability-weighted *expected* damage in return, and the opponent's
+*worst-case* damage (their single most-damaging predicted move). These are
+blended into a net-advantage score (a simplified minimax), and the
+highest-scoring action is returned with a plain-language explanation.
+
 ## Status
 
-Stage 3 — moveset predictor implemented and tested. Counter recommendation
-and GUI are not yet implemented.
+Stage 4 — counter recommendation engine implemented and tested. GUI is not
+yet implemented.
 
 Note: move/Pokémon data and usage stats are currently backed by
 hand-written JSON/text fixtures (`data/cache/`, `data/usage_stats/`)

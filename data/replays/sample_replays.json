@@ -1,0 +1,17 @@
+[
+  {
+    "replay_id": "sample-battle-1",
+    "pokemon": "pikachu",
+    "revealed_moves": ["thunderbolt", "quick-attack", "volt-tackle"]
+  },
+  {
+    "replay_id": "sample-battle-2",
+    "pokemon": "charizard",
+    "revealed_moves": ["flamethrower", "solar-beam", "earthquake"]
+  },
+  {
+    "replay_id": "sample-battle-3",
+    "pokemon": "bulbasaur",
+    "revealed_moves": ["vine-whip", "tackle", "sleep-powder", "leech-seed"]
+  }
+]

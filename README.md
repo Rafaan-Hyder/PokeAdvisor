@@ -82,11 +82,17 @@ the offline fixture cache (see note below). The GUI doesn't take a bench
 input, so `counter_engine`'s switch-recommendation path isn't reachable
 from it yet — only move recommendations are shown.
 
+## Evaluation
+
+`evaluate.py` (`python evaluate.py`) reports the moveset predictor's hit
+rate against constructed replay logs (`data/replays/`) and the counter
+engine's agreement rate against constructed battle scenarios with a known
+correct answer. See `EVALUATION.md` for results and discussion.
+
 ## Status
 
-Stage 5 — GUI implemented and manually exercised end-to-end (headless via
-Xvfb, since this sandbox has no display). Evaluation script and final
-polish are not yet done.
+Stage 6 — evaluation script and report done. Stage 7 (final polish) is
+next.
 
 Note: this sandbox's Python venv originally lacked Tkinter (`python3-tk`
 wasn't installed for that interpreter version); the venv was recreated

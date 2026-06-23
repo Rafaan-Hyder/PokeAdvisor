@@ -1,8 +1,6 @@
 """Tests for counter_engine, using constructed battle scenarios with a known
 correct answer."""
 
-import pytest
-
 from pokeadvisor import counter_engine
 
 

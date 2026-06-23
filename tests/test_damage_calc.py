@@ -1,7 +1,5 @@
 """Unit tests for damage_calc, using known type matchups as sanity checks."""
 
-import pytest
-
 from pokeadvisor import damage_calc
 from pokeadvisor.pokeapi_client import get_pokemon_data, get_move_data
 

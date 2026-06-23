@@ -1,7 +1,5 @@
 """Sanity-check tests for evaluate.py's two evaluation routines."""
 
-import pytest
-
 import evaluate
 
 

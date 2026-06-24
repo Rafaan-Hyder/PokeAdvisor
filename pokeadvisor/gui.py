@@ -6,6 +6,14 @@ output panel shows the player's moves ranked by estimated damage
 (color-coded by type effectiveness), the opponent's predicted moveset with
 probabilities, and the recommended action with a plain-language reason.
 
+As the opponent reveals moves over the course of a battle, picking one
+from "Opponent revealed a move" and clicking Reveal feeds it into
+moveset_predictor.update_with_observed_move, narrowing the live
+prediction; the next Analyze (and the recommendation it produces) uses
+the updated, narrowed-down moveset. Switching opponents resets the
+prediction back to the usage-stats prior and clears the revealed-moves
+log, since that's a new battle.
+
 Move choices are limited to the intersection of a Pokémon's learnset and
 the moves we have cached power/type/category data for (`data/cache/moves/`)
 -- see the README note on offline fixtures for why that set is currently
@@ -55,6 +63,8 @@ class PokeAdvisorApp:
         self.pokemon_names = get_available_pokemon()
         self.usage_stats = moveset_predictor.parse_usage_file(USAGE_STATS_PATH)
         self.move_vars = []
+        self.predicted_moveset = []
+        self.revealed_moves = []
 
         self._build_input_panel()
         self._build_output_panel()
@@ -63,6 +73,7 @@ class PokeAdvisorApp:
             self.player_combo.current(0)
             self.opponent_combo.current(0)
             self._on_player_pokemon_change()
+            self._on_opponent_pokemon_change()
 
     def _build_input_panel(self):
         input_frame = ttk.Frame(self.root, padding=10)
@@ -80,6 +91,15 @@ class PokeAdvisorApp:
         ttk.Label(input_frame, text="Opponent's Pokémon").grid(row=0, column=1, sticky="w", padx=(20, 0))
         self.opponent_combo = ttk.Combobox(input_frame, values=self.pokemon_names, state="readonly", width=20)
         self.opponent_combo.grid(row=1, column=1, sticky="w", padx=(20, 0))
+        self.opponent_combo.bind("<<ComboboxSelected>>", lambda e: self._on_opponent_pokemon_change())
+
+        ttk.Label(input_frame, text="Opponent revealed a move").grid(row=2, column=1, sticky="w", padx=(20, 0), pady=(8, 0))
+        self.reveal_frame = ttk.Frame(input_frame)
+        self.reveal_frame.grid(row=3, column=1, sticky="w", padx=(20, 0))
+        self.reveal_combo = ttk.Combobox(self.reveal_frame, state="readonly", width=14)
+        self.reveal_combo.grid(row=0, column=0)
+        self.reveal_button = ttk.Button(self.reveal_frame, text="Reveal", command=self._on_reveal_move)
+        self.reveal_button.grid(row=0, column=1, padx=(4, 0))
 
         self.analyze_button = ttk.Button(input_frame, text="Analyze", command=self._on_analyze)
         self.analyze_button.grid(row=4, column=0, columnspan=2, pady=(12, 0), sticky="w")
@@ -118,6 +138,39 @@ class PokeAdvisorApp:
             checkbox.pack(anchor="w")
             self.move_vars.append((move_name, var))
 
+    def _on_opponent_pokemon_change(self):
+        """Reset the live moveset prediction when the opponent changes.
+
+        Switching opponents starts a fresh battle, so any moves revealed
+        about the *previous* opponent no longer apply: the prediction is
+        re-derived from the usage-stats prior and the revealed-moves log
+        is cleared.
+        """
+        opponent_name = self.opponent_combo.get()
+        self.predicted_moveset = moveset_predictor.predict_moveset(opponent_name, self.usage_stats)
+        self.revealed_moves = []
+
+        opponent_data = get_pokemon_data(opponent_name)
+        self.reveal_combo["values"] = get_available_moves_for(opponent_data)
+        self.reveal_combo.set("")
+
+        self._render_predicted_moveset(self.predicted_moveset)
+
+    def _on_reveal_move(self):
+        """Feed an opponent's revealed move back into the live prediction.
+
+        Confirms the move (it's no longer a useful prediction target) and
+        redistributes the remaining weights via update_with_observed_move,
+        so the next Analyze uses the updated, narrowed-down moveset.
+        """
+        move_name = self.reveal_combo.get()
+        if not move_name:
+            return
+
+        self.predicted_moveset = moveset_predictor.update_with_observed_move(self.predicted_moveset, move_name)
+        self.revealed_moves.append(move_name)
+        self._render_predicted_moveset(self.predicted_moveset)
+
     def _selected_moves(self):
         return [name for name, var in self.move_vars if var.get()]
 
@@ -141,11 +194,10 @@ class PokeAdvisorApp:
         player_moves = [get_move_data(name) for name in selected_move_names]
 
         ranked = damage_calc.rank_moves(player_data, player_moves, opponent_data)
-        predicted_moveset = moveset_predictor.predict_moveset(opponent_name, self.usage_stats)
-        result = counter_engine.recommend_action(player_data, player_moves, opponent_data, predicted_moveset)
+        result = counter_engine.recommend_action(player_data, player_moves, opponent_data, self.predicted_moveset)
 
         self._render_ranked_moves(ranked)
-        self._render_predicted_moveset(predicted_moveset)
+        self._render_predicted_moveset(self.predicted_moveset)
         self.recommendation_label.config(text=result["explanation"])
 
     def _render_ranked_moves(self, ranked):
@@ -161,6 +213,8 @@ class PokeAdvisorApp:
     def _render_predicted_moveset(self, predicted_moveset):
         self.predicted_box.config(state="normal")
         self.predicted_box.delete("1.0", "end")
+        if self.revealed_moves:
+            self.predicted_box.insert("end", f"Revealed so far: {', '.join(self.revealed_moves)}\n\n")
         if not predicted_moveset:
             self.predicted_box.insert("end", "No usage data for this opponent.\n")
         for entry in predicted_moveset:

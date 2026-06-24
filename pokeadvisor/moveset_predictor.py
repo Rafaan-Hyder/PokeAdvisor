@@ -16,8 +16,10 @@ to 1.
 
 import re
 
+# Real smogon.com/stats/.../moveset/ files separate the move name and
+# percentage with a single space, not the two-or-more the fixture used.
 _HEADER_RE = re.compile(r"^\s*\|\s*([A-Za-z0-9\-' .]+?)\s*\|\s*$")
-_MOVE_LINE_RE = re.compile(r"^\s*\|\s*(.+?)\s{2,}(\d+\.\d+)%\s*\|\s*$")
+_MOVE_LINE_RE = re.compile(r"^\s*\|\s*(.+?)\s+(\d+\.\d+)%\s*\|\s*$")
 _SEPARATOR_RE = re.compile(r"^\s*\+-+\+\s*$")
 _MOVES_SECTION_RE = re.compile(r"^\s*\|\s*Moves\s*\|?\s*$")
 _OTHER_SECTION_RE = re.compile(r"^\s*\|\s*(Abilities|Items|Spreads|Tera Types|Teammates|Checks and Counters)\s*\|?\s*$")

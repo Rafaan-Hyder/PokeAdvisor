@@ -18,6 +18,9 @@ import re
 
 # Real smogon.com/stats/.../moveset/ files separate the move name and
 # percentage with a single space, not the two-or-more the fixture used.
+# They also include a catch-all "Other XX%" line (rare/unlisted moves
+# lumped together), which is filtered out in parse_usage_file rather than
+# treated as a literal move named "other".
 _HEADER_RE = re.compile(r"^\s*\|\s*([A-Za-z0-9\-' .]+?)\s*\|\s*$")
 _MOVE_LINE_RE = re.compile(r"^\s*\|\s*(.+?)\s+(\d+\.\d+)%\s*\|\s*$")
 _SEPARATOR_RE = re.compile(r"^\s*\+-+\+\s*$")
@@ -53,6 +56,8 @@ def parse_usage_file(filepath):
         move_match = _MOVE_LINE_RE.match(line)
         if in_moves_section and move_match:
             move_name = move_match.group(1).strip().lower().replace(" ", "-")
+            if move_name == "other":
+                continue
             percentage = float(move_match.group(2))
             usage[current_pokemon][move_name] = percentage
             continue

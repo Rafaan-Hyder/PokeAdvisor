@@ -1,0 +1,6 @@
+{
+  "name": "fire-blast",
+  "type": "fire",
+  "power": 110,
+  "damage_class": "special"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "earth-power",
+  "type": "ground",
+  "power": 90,
+  "damage_class": "special"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "brave-bird",
+  "type": "flying",
+  "power": 120,
+  "damage_class": "physical"
+}

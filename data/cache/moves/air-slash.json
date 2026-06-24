@@ -1,0 +1,6 @@
+{
+  "name": "air-slash",
+  "type": "flying",
+  "power": 75,
+  "damage_class": "special"
+}

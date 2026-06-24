@@ -1,0 +1,6 @@
+{
+  "name": "dragon-claw",
+  "type": "dragon",
+  "power": 80,
+  "damage_class": "physical"
+}

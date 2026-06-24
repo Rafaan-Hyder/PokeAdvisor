@@ -1,0 +1,6 @@
+{
+  "name": "horn-leech",
+  "type": "grass",
+  "power": 75,
+  "damage_class": "physical"
+}

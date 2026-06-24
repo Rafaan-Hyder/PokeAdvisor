@@ -1,0 +1,6 @@
+{
+  "name": "wood-hammer",
+  "type": "grass",
+  "power": 120,
+  "damage_class": "physical"
+}

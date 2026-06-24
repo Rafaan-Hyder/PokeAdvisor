@@ -1,0 +1,6 @@
+{
+  "name": "fire-punch",
+  "type": "fire",
+  "power": 75,
+  "damage_class": "physical"
+}

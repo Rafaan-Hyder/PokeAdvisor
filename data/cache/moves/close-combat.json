@@ -1,0 +1,6 @@
+{
+  "name": "close-combat",
+  "type": "fighting",
+  "power": 120,
+  "damage_class": "physical"
+}

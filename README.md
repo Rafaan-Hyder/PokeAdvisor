@@ -94,16 +94,25 @@ discussion are in `EVALUATION.md`.
 
 ## Known limitations / assumptions
 
-- **Fixtures are kept as a documented offline fallback.** The committed
-  fixtures (`data/cache/`, `data/usage_stats/gen9ou-sample.txt`,
-  `data/replays/`) are hand-built, not real API responses or monthly
-  Smogon stats. They exist so the test suite and demos work without
-  network access. `pokeapi_client.py` has been verified against the live
-  PokéAPI (Pikachu, Charizard, Bulbasaur) and `moveset_predictor.py` has
-  been verified against a real monthly Smogon `moveset/` file — both work
-  unmodified against real data. Note: real Smogon moveset files separate
-  the move name and percentage with a single space, not the two-or-more
-  the original fixture used; `_MOVE_LINE_RE` was fixed to accept either.
+- **The GUI's moveset predictor runs on real data.** `gui.py` points
+  `USAGE_STATS_PATH` at `data/usage_stats/gen9ou-1500.txt`, a real
+  downloaded Smogon gen9ou moveset file (smogon.com/stats), not a
+  fixture. `data/cache/` (25 Pokémon and their moves) is likewise real
+  data fetched live from PokéAPI. Note Bulbasaur has no real OU usage
+  entry — it isn't an OU-viable Pokémon — so its predicted moveset is
+  legitimately empty, not a bug.
+- **Fixtures are kept as a documented offline fallback.** The original
+  hand-built fixtures (`data/usage_stats/gen9ou-sample.txt`,
+  `data/replays/`) are not real API responses or monthly Smogon stats.
+  They exist so the test suite and `evaluate.py`'s fixture-based
+  evaluation work without network access; they're no longer what the
+  GUI uses at runtime. `pokeapi_client.py` has been verified against the
+  live PokéAPI and `moveset_predictor.py` has been verified against real
+  monthly Smogon `moveset/` files — both work unmodified against real
+  data. Note: real Smogon moveset files separate the move name and
+  percentage with a single space, not the two-or-more the original
+  fixture used, and include an `Other XX%` catch-all line;
+  `parse_usage_file`/`_MOVE_LINE_RE` were fixed to handle both.
 - **The GUI has no bench/switch input.** Per the build plan's Stage 5 spec
   (player Pokémon + moves, opponent Pokémon, Analyze), the GUI only
   surfaces move recommendations; `counter_engine`'s switch-recommendation

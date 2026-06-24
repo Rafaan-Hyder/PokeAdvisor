@@ -18,6 +18,13 @@ Move choices are limited to the intersection of a Pokémon's learnset and
 the moves we have cached power/type/category data for (`data/cache/moves/`)
 -- see the README note on offline fixtures for why that set is currently
 small.
+
+The opponent's predicted moveset is driven by USAGE_STATS_PATH, which
+points at a real downloaded Smogon gen9ou moveset file
+(`data/usage_stats/gen9ou-1500.txt`), not the hand-built
+`gen9ou-sample.txt` fixture -- that fixture only covers Pikachu,
+Charizard, and Bulbasaur and is kept around as a documented offline
+fallback (see README).
 """
 
 import os
@@ -27,7 +34,9 @@ from tkinter import ttk, messagebox
 from pokeadvisor import counter_engine, damage_calc, moveset_predictor
 from pokeadvisor.pokeapi_client import CACHE_DIR, MOVES_CACHE_DIR, get_move_data, get_pokemon_data
 
-USAGE_STATS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "usage_stats", "gen9ou-sample.txt")
+# Real Smogon gen9ou moveset data (downloaded from smogon.com/stats), not
+# the hand-built gen9ou-sample.txt fixture. See module docstring.
+USAGE_STATS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "usage_stats", "gen9ou-1500.txt")
 
 EFFECTIVENESS_COLORS = {
     "super effective": "#1a7f37",

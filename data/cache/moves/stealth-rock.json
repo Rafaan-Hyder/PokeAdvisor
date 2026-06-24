@@ -1,0 +1,6 @@
+{
+  "name": "stealth-rock",
+  "type": "rock",
+  "power": null,
+  "damage_class": "status"
+}

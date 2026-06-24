@@ -1,0 +1,6 @@
+{
+  "name": "dragon-darts",
+  "type": "dragon",
+  "power": 50,
+  "damage_class": "physical"
+}

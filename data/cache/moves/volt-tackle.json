@@ -1,0 +1,6 @@
+{
+  "name": "volt-tackle",
+  "type": "electric",
+  "power": 120,
+  "damage_class": "physical"
+}

@@ -1,0 +1,6 @@
+{
+  "name": "stone-edge",
+  "type": "rock",
+  "power": 100,
+  "damage_class": "physical"
+}

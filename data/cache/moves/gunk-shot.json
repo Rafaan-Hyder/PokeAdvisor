@@ -1,0 +1,6 @@
+{
+  "name": "gunk-shot",
+  "type": "poison",
+  "power": 120,
+  "damage_class": "physical"
+}

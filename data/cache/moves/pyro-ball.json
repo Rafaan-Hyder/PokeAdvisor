@@ -1,0 +1,6 @@
+{
+  "name": "pyro-ball",
+  "type": "fire",
+  "power": 120,
+  "damage_class": "physical"
+}

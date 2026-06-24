@@ -1,0 +1,6 @@
+{
+  "name": "toxic-spikes",
+  "type": "poison",
+  "power": null,
+  "damage_class": "status"
+}

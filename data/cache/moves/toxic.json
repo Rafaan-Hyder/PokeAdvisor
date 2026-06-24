@@ -1,0 +1,6 @@
+{
+  "name": "toxic",
+  "type": "poison",
+  "power": null,
+  "damage_class": "status"
+}

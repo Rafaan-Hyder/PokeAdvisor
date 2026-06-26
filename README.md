@@ -85,7 +85,14 @@ desktop app: pick your active Pokémon and up to 4 of its moves, pick the
 opponent's active Pokémon, click Analyze. Shows your moves ranked by
 estimated damage (color-coded by effectiveness tier), the opponent's
 predicted moveset with probabilities, and the recommended action with its
-explanation.
+explanation. The dropdowns are populated from `data/cache/` — currently 25
+well-known competitive Pokémon (Pikachu, Charizard, Garchomp, Dragapult,
+Gholdengo, Kingambit, etc.) with real PokéAPI stat/move data. As the
+opponent reveals moves during a battle, picking one from "Opponent revealed
+a move" and clicking Reveal feeds it into
+`moveset_predictor.update_with_observed_move()`, narrowing the live
+prediction for the rest of the battle; switching opponents resets the
+prediction back to the usage-stats prior and clears the revealed-moves log.
 
 **Evaluation** (`evaluate.py`) reports the moveset predictor's hit rate
 against constructed replay logs and the counter engine's agreement rate
@@ -120,7 +127,8 @@ discussion are in `EVALUATION.md`.
   `evaluate.py`) but isn't reachable from the GUI yet.
 - **Move/Pokémon choices in the GUI are limited** to the intersection of a
   Pokémon's learnset and the moves we have cached power/type/category data
-  for, since that data isn't fetchable live in this environment.
+  for (`data/cache/moves/`) — i.e. the 25-Pokémon roster and its curated
+  staple movesets, not PokéAPI's full catalog.
 - **The damage formula omits crit chance, the random damage roll, weather,
   and item/ability modifiers** — none of these are knowable from the
   pre-battle menu the player sees, so including them wouldn't be
